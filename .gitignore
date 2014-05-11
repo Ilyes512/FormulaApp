@@ -6,3 +6,6 @@ composer.phar
 .DS_Store
 Thumbs.db
 .idea
+/public/packages/barryvdh/
+/public/packages/maximebf/
+/_ide_helper.php
