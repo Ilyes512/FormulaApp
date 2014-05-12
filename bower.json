@@ -1,0 +1,18 @@
+{
+    "name": "laracroft",
+    "version": "0.1.0",
+    "description": "A Laravel playground",
+    "keywords": [
+        "Laravel",
+        "PHP"
+    ],
+    "authors": [
+        "Ilyes512"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/Ilyes512",
+    "private": true,
+    "devDependencies": {
+        "foundation": "~5.2.2"
+    }
+}
