@@ -11,7 +11,13 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/', ['as' => 'index', function()
 {
-	return View::make('hello');
-});
+	return View::make('index');
+}]);
+
+Route::resource('formula', 'FormulaController');
+
+Route::resource('tag', 'TagController');
+
+Route::resource('category', 'CategoryController');

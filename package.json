@@ -1,26 +1,27 @@
 {
-    "name": "laracroft",
-    "version": "0.1.0",
-    "description": "A Laravel playground",
-    "main": "gulpfile.js",
-    "dependencies": {
-        "gulp": "~3.6.0"
-    },
-    "devDependencies": {
-        "gulp": "^3.6.0",
-        "gulp-uglify": "^0.2.1",
-        "gulp-rename": "^1.2.0",
-        "gulp-concat": "^2.2.0",
-        "gulp-watch": "^0.5.4",
-        "gulp-ruby-sass": "^0.4.3"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-        "Laravel",
-        "PHP"
-    ],
-    "author": "Ilyes512",
-    "license": "MIT"
+  "name": "laracroft",
+  "version": "0.1.0",
+  "description": "A Laravel playground",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "~3.6.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.0",
+    "gulp-compass": "^1.1.9",
+    "gulp-concat": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-ruby-sass": "^0.4.3",
+    "gulp-uglify": "^0.2.1",
+    "gulp-watch": "^0.5.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Laravel",
+    "PHP"
+  ],
+  "author": "Ilyes512",
+  "license": "MIT"
 }

@@ -1,0 +1,27 @@
+@import
+  "../../../bower_components/foundation/scss/normalize",
+  "../../../bower_components/foundation/scss/foundation",
+  "chosen";
+
+.actions, .admin {
+  form {
+    display: inline-block;
+    input[type=submit] {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.admin {
+  margin-bottom: rem-calc(20);
+}
+
+small input[type=submit] {
+  top: rem-calc(-10);
+}
+
+// Fixes Foundation's lack for multiple select form
+select[multiple], select[size] {
+  height: auto;
+  background-image: none;
+}

@@ -1,21 +1,21 @@
-## Laravel PHP Framework
+# Formula App
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework) [![License](https://poser.pugx.org/laravel/framework/license.png)](https://packagist.org/packages/laravel/framework)
+This is a demo app made with the Framework [Laravel](http://laravel.com/) (using version 4.2, but it will also work fine with 4.1.\*). The app is made just to get some experience with the framework. It doesn't use any fancy Design Patterns. This app should be understandable for anyone that read the Laravel Documentation or any of the Laravel books out there.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+# Instructions
+I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash)) with which you are ready to go. You will need to have [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed (or something familiar that will work with Vagrant) and [Vagrant](http://www.vagrantup.com/downloads.html). 
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+1. Clone this repo to your computer: `$ git clone https://github.com/fideloper/Vaprobash.git`
+2. Open up your terminal and move to the cloned repo.
+3. Run this on your first time: `$ vagrant up`. If you never used Vagrant then this will download a Ubuntu box and will continue and provision your box with the necessary stack (Nginx, PHP, MariaDB, Composer).
+4. After it's done and your Vagrant is running\* you can visit the app in your browser with `http://192.168.22.10.xip.io/`.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+\* You can check if Vagrant is running with `$ vagrant status` from within the folder or with `$ vagrant global-status` globally.
 
-## Official Documentation
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+## Things that will be added
+1. Validation
+2. Add a confirmation before deleting a formula/category/tag
+2. Basic User Authentication
+3. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
 
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
