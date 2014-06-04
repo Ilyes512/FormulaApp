@@ -16,9 +16,9 @@
         </thead>
         <tbody>
         @foreach($tags as $tag)
-            <tr>
+            <tr class="tags">
                 <td>{{ $tag->id }}</td>
-                <td><a href="{{ route('tag.show', $tag->id) }}"><span class="label">{{ $tag->name }}</span></a></td>
+                <td><a href="{{ route('tag.show', $tag->id) }}"><span class="label"><i class="fa fa-tag fa-fw fa-lg"></i> {{ $tag->name }}</span></a></td>
                 <td class="actions">
                     {{ Form::open(['route' => ['tag.edit', $tag->id], 'method' => 'GET']) }}
                     {{ Form::submit('Edit', ['class' => 'button tiny']) }}

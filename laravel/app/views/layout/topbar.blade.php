@@ -5,7 +5,7 @@
 <nav class="top-bar" data-topbar>
     <ul class="title-area">
         <li class="name">
-            <h1><a href="#">Formula App</a></h1>
+            <h1><a href="{{ route('index') }}">Formula App</a></h1>
         </li>
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
     </ul>
@@ -13,9 +13,9 @@
     <section class="top-bar-section">
         <!-- class="active" -->
         <ul class="left">
-            <li><a href="{{ route('index') }}">Home</a></li>
+            <li><a href="{{ route('index') }}"><i class="fa fa-home fa-fw fa-lg"></i> Home</a></li>
             <li class="has-dropdown">
-                <a href="#">General</a>
+                <a href="#"><i class="fa fa-book fa-fw fa-lg"></i> General</a>
                 <ul class="dropdown">
                     <li><a href="{{ route('formula.index') }}">Show all formulas</a></li>
                     <li><a href="{{ route('category.index') }}">Show all categories</a></li>
@@ -23,13 +23,16 @@
                 </ul>
             </li>
             <li class="has-dropdown">
-                <a href="#">Add new</a>
+                <a href="#"><i class="fa fa-plus fa-fw fa-lg"></i> Add new</a>
                 <ul class="dropdown">
                     <li><a href="{{ route('formula.create') }}">Formula</a></li>
                     <li><a href="{{ route('category.create') }}">Category</a></li>
                     <li><a href="{{ route('tag.create') }}">Tag</a></li>
                 </ul>
             </li>
+        </ul>
+        <ul class="right">
+            <li><a href="https://github.com/Ilyes512/FormulaApp"><i class="fa fa-github fa-fw fa-lg"></i> Github</a></li>
         </ul>
     </section>
 </nav>

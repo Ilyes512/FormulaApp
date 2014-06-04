@@ -22,9 +22,9 @@
                 <td>{{ $formula->id }}</td>
                 <td>{{ HTML::link(action('FormulaController@show', $formula->id) , $formula->name) }}</td>
                 <td>{{ HTML::link(route('category.show', $formula->category->id), $formula->category->name) }}</td>
-                <td>
+                <td class="tags">
                 @foreach( $formula->tags as $tag )
-                    <a href="{{ route('tag.show', $tag->id) }}"><span class="label">{{ $tag->name }}</span></a>
+                    <a href="{{ route('tag.show', $tag->id) }}"><span class="label"><i class="fa fa-tag fa-fw fa-lg"></i> {{ $tag->name }}</span></a>
                 @endforeach
                 </td>
                 <td class="actions">

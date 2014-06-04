@@ -1,6 +1,7 @@
 @import
   "../../../bower_components/foundation/scss/normalize",
   "../../../bower_components/foundation/scss/foundation",
+  "../../../bower_components/fontawesome/scss/font-awesome.scss",
   "chosen";
 
 .actions, .admin {
@@ -24,4 +25,8 @@ small input[type=submit] {
 select[multiple], select[size] {
   height: auto;
   background-image: none;
+}
+
+.tags .label {
+  padding-left: rem-calc(4px);
 }

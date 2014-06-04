@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="medium-12 columns">
                     <hr>
-                    <input type="submit" class="button right" >
+                    {{ Form::submit('Edit', ['class' => 'button right']) }}
                 </div>
             </div>
         </fieldset>

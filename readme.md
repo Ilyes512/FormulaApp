@@ -19,7 +19,8 @@ I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash))
 3. Add a confirmation before deleting a formula/category/tag
 4. Basic User Authentication
 5. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
-6. Add some Fontawesomeness (icons)
+6. ~Add some Fontawesomeness (icons)~~ Done
+7. Add page pagination
 
 
 ## Some screens
