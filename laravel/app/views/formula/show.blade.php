@@ -8,8 +8,6 @@
 
 @section('content')
 
-
-
 <div class="row">
     <medium-12 class="columns">
         <h1>{{ $formula->name }}</h1>
@@ -27,14 +25,17 @@
         <div class="panel callout">
             \[{{ $formula->formula }}\]
         </div>
+        @if( isset ( $formula->info ) )
         <h3>Info:</h3>
         <div class="panel">
             <p>
                 {{ $formula->info }}
             </p>
         </div>
+        @endif
     </div>
     <div class="medium-3 columns">
+    @if( $formula->tags->count() > 0 )
         <div>
             <h3>Tags:</h3>
             <p>
@@ -43,6 +44,7 @@
                 @endforeach
             </p>
         </div>
+     @endif
         <div class="admin">
             <h3>Actions:</h3>
             {{ Form::open(['route' => ['formula.edit', $formula->id], 'method' => 'GET']) }}

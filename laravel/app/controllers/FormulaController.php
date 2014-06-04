@@ -34,14 +34,27 @@ class FormulaController extends \BaseController
      */
     public function store()
     {
-        //dd(Input::get('tags'));
+        $rules = Formula::$validationRules;
+        $rules['name'][] = 'unique:formulas,name';
+        $validator = Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::route('formula.create')
+                ->withInput()
+                ->withErrors($validator)
+                ->with('message', 'Oeps, there were some errors!');
+        }
+
         $formula = new Formula;
         $formula->name = Input::get('name');
         $formula->formula = Input::get('formula');
-        $formula->description = Input::get('description');
+        $formula->info = Input::get('description');
         $formula->category_id = Input::get('category');
         $formula->save();
-        $formula->tags()->attach(Input::get('tags'));
+
+        if (Input::has('tags')) {
+            $formula->tags()->attach(Input::get('tags'));
+        }
 
         return Redirect::route('formula.index')
             ->with('message', 'Formula "' . $formula->name . '" is successfully added!');
@@ -100,13 +113,24 @@ class FormulaController extends \BaseController
     public function update($id)
     {
         try {
+            $rules = Formula::$validationRules;
+            $rules['name'][] = 'unique:formulas,name,' . $id;
+            $validator = Validator::make(Input::all(), $rules);
+
+            if ($validator->fails()) {
+                return Redirect::route('formula.edit', $id)
+                    ->withInput()
+                    ->withErrors($validator)
+                    ->with('message', 'Oeps, there were some errors!');
+            }
+
             $formula = Formula::findOrFail($id);
             $formula->name = Input::get('name');
             $formula->formula = Input::get('formula');
-            $formula->description = Input::get('description');
+            $formula->info = Input::get('description');
             $formula->category_id = Input::get('category');
             $formula->save();
-            $formula->tags()->sync(Input::get('tags'));
+            $formula->tags()->sync(Input::get('tags', []));
 
             return Redirect::route('formula.show', $id)
                 ->with('message', 'Formula "' . $formula->name . '" has been updated!');

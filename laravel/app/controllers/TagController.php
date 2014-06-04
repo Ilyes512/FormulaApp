@@ -35,6 +35,17 @@ class TagController extends \BaseController
      */
     public function store()
     {
+        $rules = Tag::$validationRules;
+        $rules['name'][] = 'unique:tags,name';
+        $validator = Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::route('tag.create')
+                ->withInput()
+                ->withErrors($validator)
+                ->with('message', 'Oeps, there were some errors!');
+        }
+
         $tag = new Tag;
         $tag->name = Input::get('name');
         $tag->save();
@@ -101,6 +112,17 @@ class TagController extends \BaseController
     public function update($id)
     {
         try {
+            $rules = Tag::$validationRules;
+            $rules['name'][] = 'unique:tags,name,' . $id;
+            $validator = Validator::make(Input::all(), $rules);
+
+            if ($validator->fails()) {
+                return Redirect::route('tag.edit', $id)
+                    ->withInput()
+                    ->withErrors($validator)
+                    ->with('message', 'Oeps, there were some errors!');
+            }
+
             $tag = Tag::findOrFail($id);
             $tag->name = Input::get('name');
             $tag->save();

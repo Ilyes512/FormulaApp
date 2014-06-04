@@ -1,0 +1,14 @@
+/bootstrap/compiled.php
+/vendor
+composer.phar
+.env.*.php
+.env.php
+.DS_Store
+Thumbs.db
+.idea
+/public/packages/barryvdh/
+/public/packages/maximebf/
+/_ide_helper.php
+bower_components
+node_modules
+/.sass-cache/

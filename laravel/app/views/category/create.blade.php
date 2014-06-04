@@ -11,12 +11,13 @@
     <div class="medium-8 columns">
         <fieldset>
             <legend>Create Category</legend>
-            <div class="row">
+            <div class="row{{ $errors->has('name') ? ' error' : '' }}">
                 <div class="medium-3 columns">
                     {{ Form::label('name', 'Name: ', ['class' => 'small-only-text-left text-right inline']) }}
                 </div>
                 <div class="medium-9 columns">
-                    {{ Form::text('name', null, ['placeholder' => 'Type in your Category name']) }}
+                    {{ Form::text('name', null, ['placeholder' => 'Type in your Category name', 'maxlength' => '255']) }}
+                    {{ $errors->first('name', '<small class="error">:message</small>') }}
                 </div>
             </div>
             <div class="row">

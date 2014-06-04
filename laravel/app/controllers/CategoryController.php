@@ -35,6 +35,17 @@ class CategoryController extends \BaseController
      */
     public function store()
     {
+        $rules = Category::$validationRules;
+        $rules['name'][] = 'unique:categories,name';
+        $validator = Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::route('category.create')
+                ->withInput()
+                ->withErrors($validator)
+                ->with('message', 'Oeps, there were some errors!');
+        }
+
         $category = new Category;
         $category->name = Input::get('name');
         $category->save();
@@ -99,6 +110,17 @@ class CategoryController extends \BaseController
     public function update($id)
     {
         try {
+            $rules = Category::$validationRules;
+            $rules['name'][] = 'unique:categories,name,' . $id;
+            $validator = Validator::make(Input::all(), $rules);
+
+            if ($validator->fails()) {
+                return Redirect::route('category.edit', $id)
+                    ->withInput()
+                    ->withErrors($validator)
+                    ->with('message', 'Oeps, there were some errors!');
+            }
+
             $category = Category::findOrFail($id);
             $category->name = Input::get('name');
             $category->save();

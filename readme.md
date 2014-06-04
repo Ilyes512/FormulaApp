@@ -14,8 +14,9 @@ I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash))
 
 
 ## Things that will be added
-1. Validation
+1. ~~Validation~~ Done 
 2. Add a confirmation before deleting a formula/category/tag
 2. Basic User Authentication
 3. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
+4. Add some Fontawesomeness (icons)
 

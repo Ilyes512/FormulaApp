@@ -16,8 +16,9 @@ class CreateFormulasTable extends Migration
         Schema::create('formulas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->unique('name');
             $table->text('formula');
-            $table->text('info');
+            $table->text('info')->nullable();
             $table->integer('category_id')->unsigned()->index()->default('1');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
