@@ -4,6 +4,10 @@ use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoryController extends \BaseController
 {
+    public function __construct()
+    {
+        $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -63,22 +67,19 @@ class CategoryController extends \BaseController
      */
     public function show($id)
     {
-        try {
-            $results = Formula::whereCategoryId($id)->with('category')->get();
+        $results = Formula::whereCategoryId($id)->with('category')->get();
 
-            if ($results->isEmpty()) {
-                throw new ModelNotFoundException();
-            }
-
-            $category = 'Category: ' . $results->first()->category->name;
-
-            return View::make('formula.index')
-                ->with('formulas', $results)
-                ->with('heading', $category);
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('category.index')
-                ->with('message', 'Category #' . $id . ' does not exist!');
+        if ($results->isEmpty()) {
+            $e = new ModelNotFoundException();
+            $e->setModel('Category');
+            throw $e;
         }
+
+        $category = 'Category: ' . $results->first()->category->name;
+
+        return View::make('formula.index')
+            ->with('formulas', $results)
+            ->with('heading', $category);
     }
 
 
@@ -90,14 +91,9 @@ class CategoryController extends \BaseController
      */
     public function edit($id)
     {
-        try {
-            $category = Category::findOrFail($id);
-            return View::make('category.edit')
-                ->with('category', $category);
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('category.index')
-                ->with('message', 'Category #' . $id . ' does not exist!');
-        }
+        $category = Category::findOrFail($id);
+        return View::make('category.edit')
+            ->with('category', $category);
     }
 
 
@@ -109,28 +105,23 @@ class CategoryController extends \BaseController
      */
     public function update($id)
     {
-        try {
-            $rules = Category::$validationRules;
-            $rules['name'][] = 'unique:categories,name,' . $id;
-            $validator = Validator::make(Input::all(), $rules);
+        $rules = Category::$validationRules;
+        $rules['name'][] = 'unique:categories,name,' . $id;
+        $validator = Validator::make(Input::all(), $rules);
 
-            if ($validator->fails()) {
-                return Redirect::route('category.edit', $id)
-                    ->withInput()
-                    ->withErrors($validator)
-                    ->with('message', 'Oeps, there were some errors!');
-            }
-
-            $category = Category::findOrFail($id);
-            $category->name = Input::get('name');
-            $category->save();
-
-            return Redirect::route('category.index')
-                ->with('message', 'Category "' . $category->name . '" has been updated!');
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('category.index')
-                ->with('message', 'Category #' . $id . ' does not exist!');
+        if ($validator->fails()) {
+            return Redirect::route('category.edit', $id)
+                ->withInput()
+                ->withErrors($validator)
+                ->with('message', 'Oeps, there were some errors!');
         }
+
+        $category = Category::findOrFail($id);
+        $category->name = Input::get('name');
+        $category->save();
+
+        return Redirect::route('category.index')
+            ->with('message', 'Category "' . $category->name . '" has been updated!');
     }
 
 
@@ -142,16 +133,11 @@ class CategoryController extends \BaseController
      */
     public function destroy($id)
     {
-        try {
-            $category = Category::findOrFail($id);
-            $category->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
 
-            return Redirect::route('category.index')
-                ->with('message', 'Category "' . $category->name . '" is deleted!');
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('category.index')
-                ->with('message', 'Category #' . $id . ' does not exist!');
-        }
+        return Redirect::route('category.index')
+            ->with('message', 'Category "' . $category->name . '" is deleted!');
     }
 
 

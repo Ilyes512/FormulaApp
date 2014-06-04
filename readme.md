@@ -2,7 +2,7 @@
 
 This is a demo app made with the Framework [Laravel](http://laravel.com/) (using version 4.2, but it will also work fine with 4.1.\*). The app is made just to get some experience with the framework. It doesn't use any fancy Design Patterns. This app should be understandable for anyone that read the Laravel Documentation or any of the Laravel books out there.
 
-# Instructions
+## Instructions
 I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash)) with which you are ready to go. You will need to have [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed (or something familiar that will work with Vagrant) and [Vagrant](http://www.vagrantup.com/downloads.html). 
 
 1. Clone this repo to your computer: `$ git clone https://github.com/fideloper/Vaprobash.git`
@@ -14,9 +14,20 @@ I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash))
 
 
 ## Things that will be added
-1. ~~Validation~~ Done 
-2. Add a confirmation before deleting a formula/category/tag
-2. Basic User Authentication
-3. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
-4. Add some Fontawesomeness (icons)
+1. ~~Validation~~ Done
+2. ~~Add CSRF-protection~~ Done
+3. Add a confirmation before deleting a formula/category/tag
+4. Basic User Authentication
+5. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
+6. Add some Fontawesomeness (icons)
 
+
+## Some screens
+### The Formula index page:
+<img src="https://raw.githubusercontent.com/Ilyes512/FormulaApp/master/screens/formula-index.jpeg" alt="Formula App Formula index page" style="max-width:100%"/>
+
+### The Formula create page:
+<img src="https://raw.githubusercontent.com/Ilyes512/FormulaApp/master/screens/formula-create.jpeg" alt="Formula App Formula index page" style="max-width:100%"/>
+
+### The Formula show page:
+<img src="https://raw.githubusercontent.com/Ilyes512/FormulaApp/master/screens/formula-show.jpeg" alt="Formula App Formula index page" style="max-width:100%"/>

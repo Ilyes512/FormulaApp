@@ -4,6 +4,10 @@ use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FormulaController extends \BaseController
 {
+    public function __construct()
+    {
+        $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -69,16 +73,12 @@ class FormulaController extends \BaseController
      */
     public function show($id)
     {
-        try {
-            $formula = Formula::with('category')
-                ->with('tags')
-                ->findOrFail($id);
+        $formula = Formula::with('category')
+            ->with('tags')
+            ->findOrFail($id);
 
-            return View::make('formula.show')
-                ->with('formula', $formula);
-        } catch (ModelNotFoundException $e) {
-            return Formula::route('formula.index');
-        }
+        return View::make('formula.show')
+            ->with('formula', $formula);
     }
 
 
@@ -90,17 +90,12 @@ class FormulaController extends \BaseController
      */
     public function edit($id)
     {
-        try {
-            $formula = Formula::with('category')
-                ->with('tags')
-                ->findOrFail($id);
+        $formula = Formula::with('category')
+            ->with('tags')
+            ->findOrFail($id);
 
-            return View::make('formula.edit')
-                ->with('formula', $formula);
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('formula.index')
-                ->with('message', 'Formula #' . $id . ' does not exist!');
-        }
+        return View::make('formula.edit')
+            ->with('formula', $formula);
     }
 
 
@@ -112,32 +107,27 @@ class FormulaController extends \BaseController
      */
     public function update($id)
     {
-        try {
-            $rules = Formula::$validationRules;
-            $rules['name'][] = 'unique:formulas,name,' . $id;
-            $validator = Validator::make(Input::all(), $rules);
+        $rules = Formula::$validationRules;
+        $rules['name'][] = 'unique:formulas,name,' . $id;
+        $validator = Validator::make(Input::all(), $rules);
 
-            if ($validator->fails()) {
-                return Redirect::route('formula.edit', $id)
-                    ->withInput()
-                    ->withErrors($validator)
-                    ->with('message', 'Oeps, there were some errors!');
-            }
-
-            $formula = Formula::findOrFail($id);
-            $formula->name = Input::get('name');
-            $formula->formula = Input::get('formula');
-            $formula->info = Input::get('description');
-            $formula->category_id = Input::get('category');
-            $formula->save();
-            $formula->tags()->sync(Input::get('tags', []));
-
-            return Redirect::route('formula.show', $id)
-                ->with('message', 'Formula "' . $formula->name . '" has been updated!');
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('formula.index')
-                ->with('message', 'Formula #' . $id . ' does not exist!');
+        if ($validator->fails()) {
+            return Redirect::route('formula.edit', $id)
+                ->withInput()
+                ->withErrors($validator)
+                ->with('message', 'Oeps, there were some errors!');
         }
+
+        $formula = Formula::findOrFail($id);
+        $formula->name = Input::get('name');
+        $formula->formula = Input::get('formula');
+        $formula->info = Input::get('description');
+        $formula->category_id = Input::get('category');
+        $formula->save();
+        $formula->tags()->sync(Input::get('tags', []));
+
+        return Redirect::route('formula.show', $id)
+            ->with('message', 'Formula "' . $formula->name . '" has been updated!');
     }
 
 
@@ -149,15 +139,11 @@ class FormulaController extends \BaseController
      */
     public function destroy($id)
     {
-        try {
-            $formula = Formula::findOrFail($id);
-            $formula->delete();
+        $formula = Formula::findOrFail($id);
+        $formula->delete();
 
-            return Redirect::route('formula.index')
-                ->with('message', 'Formula "' . $formula->name . '" is deleted!');
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('formula.index');
-        }
+        return Redirect::route('formula.index')
+            ->with('message', 'Formula "' . $formula->name . '" is deleted!');
     }
 
 

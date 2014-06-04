@@ -4,6 +4,10 @@ use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TagController extends \BaseController
 {
+    public function __construct()
+    {
+        $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -63,24 +67,21 @@ class TagController extends \BaseController
      */
     public function show($id)
     {
-        try {
-            $results = Formula::whereHas('tags', function ($q) use ($id) {
-                $q->where('tag_id', $id);
-            })->with('tags')->with('category')->get();
+        $results = Formula::whereHas('tags', function ($q) use ($id) {
+            $q->where('tag_id', $id);
+        })->with('tags')->with('category')->get();
 
-            if ($results->isEmpty()) {
-                throw new ModelNotFoundException();
-            }
-
-            $heading = 'Tag: ' . $results->first()->tags->find($id)->name;
-
-            return View::make('formula.index')
-                ->with('formulas', $results)
-                ->with('heading', $heading);
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('tag.index')
-                ->with('message', 'Tag #' . $id . ' does not exist!');
+        if ($results->isEmpty()) {
+            $e = new ModelNotFoundException();
+            $e->setModel('Tag');
+            throw $e;
         }
+
+        $heading = 'Tag: ' . $results->first()->tags->find($id)->name;
+
+        return View::make('formula.index')
+            ->with('formulas', $results)
+            ->with('heading', $heading);
     }
 
 
@@ -92,14 +93,9 @@ class TagController extends \BaseController
      */
     public function edit($id)
     {
-        try {
-            $tag = Tag::findOrFail($id);
-            return View::make('tag.edit')
-                ->with('tag', $tag);
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('tag.index')
-                ->with('message', 'Tag #' . $id . ' does not exist!');
-        }
+        $tag = Tag::findOrFail($id);
+        return View::make('tag.edit')
+            ->with('tag', $tag);
     }
 
 
@@ -111,28 +107,23 @@ class TagController extends \BaseController
      */
     public function update($id)
     {
-        try {
-            $rules = Tag::$validationRules;
-            $rules['name'][] = 'unique:tags,name,' . $id;
-            $validator = Validator::make(Input::all(), $rules);
+        $rules = Tag::$validationRules;
+        $rules['name'][] = 'unique:tags,name,' . $id;
+        $validator = Validator::make(Input::all(), $rules);
 
-            if ($validator->fails()) {
-                return Redirect::route('tag.edit', $id)
-                    ->withInput()
-                    ->withErrors($validator)
-                    ->with('message', 'Oeps, there were some errors!');
-            }
-
-            $tag = Tag::findOrFail($id);
-            $tag->name = Input::get('name');
-            $tag->save();
-
-            return Redirect::route('tag.index')
-                ->with('message', 'Tag "' . $tag->name . '" has been updated!');
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('tag.index')
-                ->with('message', 'Tag #' . $id . ' does not exist!');
+        if ($validator->fails()) {
+            return Redirect::route('tag.edit', $id)
+                ->withInput()
+                ->withErrors($validator)
+                ->with('message', 'Oeps, there were some errors!');
         }
+
+        $tag = Tag::findOrFail($id);
+        $tag->name = Input::get('name');
+        $tag->save();
+
+        return Redirect::route('tag.index')
+            ->with('message', 'Tag "' . $tag->name . '" has been updated!');
     }
 
 
@@ -144,16 +135,11 @@ class TagController extends \BaseController
      */
     public function destroy($id)
     {
-        try {
-            $tag = Tag::findOrFail($id);
-            $tag->delete();
+        $tag = Tag::findOrFail($id);
+        $tag->delete();
 
-            return Redirect::route('tag.index')
-                ->with('message', 'Tag "' . $tag->name . '" is deleted!');
-        } catch (ModelNotFoundException $e) {
-            return Redirect::route('tag.index')
-                ->with('message', 'Tag #' . $id . ' does not exist!');
-        }
+        return Redirect::route('tag.index')
+            ->with('message', 'Tag "' . $tag->name . '" is deleted!');
     }
 
 
