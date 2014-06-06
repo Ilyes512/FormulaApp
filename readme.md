@@ -8,7 +8,9 @@ I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash))
 1. Clone this repo to your computer: `$ git clone https://github.com/fideloper/Vaprobash.git`
 2. Open up your terminal and move to the cloned repo.
 3. Run this on your first time: `$ vagrant up`. If you never used Vagrant then this will download a Ubuntu box and will continue and provision your box with the necessary stack (Nginx, PHP, MariaDB, Composer).
-4. After it's done and your Vagrant is running\* you can visit the app in your browser with `http://192.168.22.10.xip.io/`.
+4. After it's done and your Vagrant is running\* you can visit the app (after setting up the database) in your browser with `http://192.168.22.10.xip.io/`.
+5. The Formula App will need a database called `formula`. By default it will use PostgreSQL, but you can also use MySql (just adjust the config). Make sure you create the database, before running `php artisan migrate --seed`.
+
 
 \* You can check if Vagrant is running with `$ vagrant status` from within the folder or with `$ vagrant global-status` globally.
 
@@ -19,8 +21,9 @@ I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash))
 3. Add a confirmation before deleting a formula/category/tag
 4. Basic User Authentication
 5. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
-6. ~Add some Fontawesomeness (icons)~~ Done
+6. ~~Add some Fontawesomeness (icons)~~ Done
 7. Add page pagination
+8. Ready this app to be deployed to Heroku for demoing purposes.
 
 
 ## Some screens

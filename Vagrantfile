@@ -2,9 +2,9 @@
 # vi: set ft=ruby :
 
 # Config Github Settings
-github_username = "fideloper"
+github_username = "Ilyes512"
 github_repo     = "Vaprobash"
-github_branch   = "develop"
+github_branch   = "mysetup"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
 # Server Configuration
@@ -20,20 +20,21 @@ hostname        = "vaprobash.dev"
 server_ip             = "192.168.22.10"
 server_memory         = "384" # MB
 server_swap           = "768" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
-server_timezone       = "UTC"
+server_timezone       = "Europe/Amsterdam"
 
 # Database Configuration
 mysql_root_password   = "root"   # We'll assume user "root"
 mysql_version         = "5.5"    # Options: 5.5 | 5.6
 mysql_enable_remote   = "false"  # remote access enabled when true
 pgsql_root_password   = "root"   # We'll assume user "root"
+redis_persistent      = "false"  # Options: false | true
 
 # Languages and Packages
 ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
 ruby_gems             = [        # List any Ruby Gems that you want to install
   #"jekyll",
-  #"sass",
-  #"compass",
+  "sass",
+  "compass",
 ]
 
 # To install HHVM instead of PHP, set this to "true"
@@ -41,10 +42,10 @@ hhvm                  = "false"
 
 # PHP Options
 composer_packages     = [        # List any global Composer packages that you want to install
-  #"phpunit/phpunit:4.0.*",
-  #"codeception/codeception=*",
-  #"phpspec/phpspec:2.0.*@dev",
-  #"squizlabs/php_codesniffer:1.5.*",
+  #"phpunit/phpunit:~4.1.1",
+  #"codeception/codeception:~2.0.0",
+  #"phpspec/phpspec:~2.0.0@dev",
+  #"squizlabs/php_codesniffer:~1.5.3",
 ]
 
 # Default web server document root
@@ -58,9 +59,9 @@ symfony_root_folder   = "/vagrant/symfony" # Where to install Symfony.
 
 nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
 nodejs_packages       = [          # List any global NodeJS packages that you want to install
-  #"grunt-cli",
-  #"gulp",
-  #"bower",
+  "grunt-cli",
+  "gulp",
+  "bower",
   #"yo",
 ]
 
@@ -81,7 +82,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant",
             id: "core",
             :nfs => true,
-            :mount_options => ['nolock,vers=3,udp,noatime']
+            :mount_options => ['actimeo=2']
+            # :mount_options => ['nolock,vers=3,udp,noatime']
 
   # If using VirtualBox
   config.vm.provider :virtualbox do |vb|
@@ -158,7 +160,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   # Provision PostgreSQL
-  # config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_root_password
+  config.vm.provision "shell", path: "#{github_url}/scripts/pgsql.sh", args: pgsql_root_password
 
   # Provision SQLite
   # config.vm.provision "shell", path: "#{github_url}/scripts/sqlite.sh"
@@ -176,7 +178,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/mongodb.sh"
 
   # Provision MariaDB
-  config.vm.provision "shell", path: "#{github_url}/scripts/mariadb.sh", args: [mysql_root_password, mysql_enable_remote]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mariadb.sh", args: [mysql_root_password, mysql_enable_remote]
 
   ####
   # Search Servers
@@ -205,11 +207,8 @@ Vagrant.configure("2") do |config|
   # Install Memcached
   # config.vm.provision "shell", path: "#{github_url}/scripts/memcached.sh"
 
-  # Provision Redis (without journaling and persistence)
-  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh"
-
-  # Provision Redis (with journaling and persistence)
-  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh", args: "persistent"
+  # Provision Redis
+  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh", args: redis_persistent
   # NOTE: It is safe to run this to add persistence even if originally provisioned without persistence
 
 
@@ -221,7 +220,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/beanstalkd.sh"
 
   # Install Heroku Toolbelt
-  # config.vm.provision "shell", path: "https://toolbelt.heroku.com/install-ubuntu.sh"
+  config.vm.provision "shell", path: "https://toolbelt.heroku.com/install-ubuntu.sh"
 
   # Install Supervisord
   # config.vm.provision "shell", path: "#{github_url}/scripts/supervisord.sh"
@@ -231,10 +230,10 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Install Nodejs
-  # config.vm.provision "shell", path: "#{github_url}/scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
+  config.vm.provision "shell", path: "#{github_url}/scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
 
   # Install Ruby Version Manager (RVM)
-  # config.vm.provision "shell", path: "#{github_url}/scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
+  config.vm.provision "shell", path: "#{github_url}/scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
 
   ####
   # Frameworks and Tooling
