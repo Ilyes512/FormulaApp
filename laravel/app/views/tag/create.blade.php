@@ -1,9 +1,9 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <h1>Create a new Tag</h1>
 
-@include('partial.message')
+@include('partials.message')
 
 {{ Form::open(['route' => 'tag.store', 'method' => 'post']) }}
 

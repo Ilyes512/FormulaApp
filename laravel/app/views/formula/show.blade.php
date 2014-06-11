@@ -1,4 +1,4 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('head_assets')
 @parent
@@ -12,7 +12,7 @@
     <medium-12 class="columns">
         <h1>{{ $formula->name }}</h1>
 
-        @include('partial.message')
+        @include('partials.message')
 
         <ul class="breadcrumbs">
             <li><a href="{{ route('category.index') }}">All Formulas</a></li>

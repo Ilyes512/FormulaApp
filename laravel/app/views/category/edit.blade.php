@@ -1,11 +1,10 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <h1>Edit the "{{ $category->name }}"-category</h1>
 
-@include('partial.message')
-
 {{ Form::open(['route' => ['category.update', $category->id], 'method' => 'put']) }}
+@include('partials.message')
 
 <div class="row">
     <div class="medium-8 columns">

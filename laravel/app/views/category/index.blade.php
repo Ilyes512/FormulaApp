@@ -1,9 +1,9 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <h1>All categories</h1>
 
-@include('partial.message')
+@include('partials.message')
 
 @if ( isset($categories) && ! $categories->isEmpty() )
     <table>

@@ -1,9 +1,9 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <h1>{{ $heading or 'All formulas' }}</h1>
 
-@include('partial.message')
+@include('partials.message')
 
 @if ( isset($formulas) && ! $formulas->isEmpty() )
     <table>

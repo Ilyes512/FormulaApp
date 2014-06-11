@@ -1,4 +1,4 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <div class="row">
@@ -6,7 +6,7 @@
         {{ Form::open(['route' => 'login']) }}
             <fieldset>
                 <legend>Login</legend>
-                @include('partial.message')
+                @include('partials.message')
                 <div class="row">
                     <div class="medium-3 columns">
                         {{ Form::label('username', 'Username: ', ['class' => 'small-only-text-left right inline']) }}

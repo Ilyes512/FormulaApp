@@ -1,4 +1,4 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('head_assets')
 @parent
@@ -8,9 +8,8 @@
 @section('content')
 <h1>Create a new Formula</h1>
 
-@include('partial.message')
-
 {{ Form::open(['route' => 'formula.store', 'method' => 'post']) }}
+@include('partials.message')
 
 <div class="row">
     <div class="medium-8 columns">

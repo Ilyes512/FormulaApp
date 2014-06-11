@@ -1,11 +1,10 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <h1>Edit the "{{ $formula->name }}"-formula</h1>
 
-@include('partial.message')
-
 {{ Form::open(['route' => ['formula.update', $formula->id], 'method' => 'put']) }}
+@include('partials.message')
 
 <div class="row">
     <div class="medium-8 columns">

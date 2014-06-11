@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('layouts.base')
 
 @section('head_assets')
 {{-- foundation.css, modernizr.js --}}

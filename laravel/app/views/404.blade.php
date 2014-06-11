@@ -1,8 +1,8 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 
-@include('partial.message')
+@include('partials.message')
 <hr/>
 <div class="panel callout">
     <h1><strong>404-error</strong></h1>

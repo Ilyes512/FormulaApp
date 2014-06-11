@@ -1,11 +1,10 @@
-@extends('layout.topbar')
+@extends('layouts.topbar')
 
 @section('content')
 <h1>Create a new Category</h1>
 
-@include('partial.message')
-
 {{ Form::open(['route' => 'category.store', 'method' => 'post']) }}
+@include('partials.message')
 
 <div class="row">
     <div class="medium-8 columns">
