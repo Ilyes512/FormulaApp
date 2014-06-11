@@ -1,12 +1,13 @@
 @extends('layouts.topbar')
 
 @section('content')
-<h1>Edit the "{{ $formula->name }}"-formula</h1>
-
-@include('partials.message')
 
 <div class="row">
-    <div class="medium-8 columns">
+    <div class="medium-10 medium-centered columns">
+        <h1>Edit the "{{ $formula->name }}"-formula</h1>
+
+        @include('partials.message')
+
         {{ Form::open(['route' => ['formula.update', $formula->id], 'method' => 'put']) }}
             <fieldset>
                 <legend>Create Formula</legend>

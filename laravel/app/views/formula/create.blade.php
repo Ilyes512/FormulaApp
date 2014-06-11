@@ -6,12 +6,12 @@
 @stop
 
 @section('content')
-<h1>Create a new Formula</h1>
-
-@include('partials.message')
-
 <div class="row">
-    <div class="medium-8 columns">
+    <div class="medium-10 medium-centered columns">
+        <h1>Create a new Formula</h1>
+
+        @include('partials.message')
+
         {{ Form::open(['route' => 'formula.store', 'method' => 'post']) }}
             <fieldset>
                 <legend>Create Formula</legend>

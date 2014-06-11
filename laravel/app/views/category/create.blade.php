@@ -1,12 +1,13 @@
 @extends('layouts.topbar')
 
 @section('content')
-<h1>Create a new Category</h1>
-
-@include('partials.message')
 
 <div class="row">
-    <div class="medium-8 columns">
+    <div class="medium-10 medium-centered columns">
+        <h1>Create a new Category</h1>
+
+        @include('partials.message')
+
         {{ Form::open(['route' => 'category.store', 'method' => 'post']) }}
             <fieldset>
                 <legend>Create Category</legend>

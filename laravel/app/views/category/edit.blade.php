@@ -1,12 +1,13 @@
 @extends('layouts.topbar')
 
 @section('content')
-<h1>Edit the "{{ $category->name }}"-category</h1>
-
-@include('partials.message')
 
 <div class="row">
-    <div class="medium-8 columns">
+    <div class="medium-10 medium-centered columns">
+        <h1>Edit the "{{ $category->name }}"-category</h1>
+
+        @include('partials.message')
+
         {{ Form::open(['route' => ['category.update', $category->id], 'method' => 'put']) }}
             <fieldset>
                 <legend>Create Category</legend>
