@@ -5,7 +5,7 @@
 <nav class="top-bar" data-topbar>
     <ul class="title-area">
         <li class="name">
-            <h1><a href="{{ route('index') }}">Formula App</a></h1>
+            <h1><a href="{{ route('home') }}">Formula App</a></h1>
         </li>
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
     </ul>
@@ -13,7 +13,7 @@
     <section class="top-bar-section">
         <!-- class="active" -->
         <ul class="left">
-            <li><a href="{{ route('index') }}"><i class="fa fa-home fa-fw fa-lg"></i> Home</a></li>
+            <li><a href="{{ route('home') }}"><i class="fa fa-home fa-fw fa-lg"></i> Home</a></li>
             <li class="has-dropdown">
                 <a href="#"><i class="fa fa-book fa-fw fa-lg"></i> General</a>
                 <ul class="dropdown">

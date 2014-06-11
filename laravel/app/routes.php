@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['as' => 'index', function()
+Route::get('/', ['as' => 'home', function()
 {
 	return View::make('index');
 }]);

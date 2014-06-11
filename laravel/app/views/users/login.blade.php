@@ -7,20 +7,22 @@
             <fieldset>
                 <legend>Login</legend>
                 @include('partials.message')
-                <div class="row">
+                <div class="row{{ $errors->has('username') ? ' error' : '' }}">
                     <div class="medium-3 columns">
                         {{ Form::label('username', 'Username: ', ['class' => 'small-only-text-left right inline']) }}
                     </div>
                     <div class="medium-9 columns">
                         {{ Form::text('username', null, ['class' => '', 'placeholder' => 'Fill in your Username']) }}
+                        {{ $errors->first('username', '<small class="error">:message</small>') }}
                     </div>
                 </div>
-                <div class="row">
+                <div class="row{{ $errors->has('password') ? ' error' : '' }}">
                     <div class="medium-3 columns">
                         {{ Form::label('password', 'Password: ', ['class' => 'small-only-text-left right inline']) }}
                     </div>
                     <div class="medium-9 columns">
                         {{ Form::password('password', ['class' => '', 'placeholder' => 'Fill in your Password']) }}
+                        {{ $errors->first('password', '<small class="error">:message</small>') }}
                     </div>
                 </div>
                 <div class="row">
