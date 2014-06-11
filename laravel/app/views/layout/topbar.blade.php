@@ -22,17 +22,24 @@
                     <li><a href="{{ route('tag.index') }}">Show all tags</a></li>
                 </ul>
             </li>
-            <li class="has-dropdown">
-                <a href="#"><i class="fa fa-plus fa-fw fa-lg"></i> Add new</a>
-                <ul class="dropdown">
-                    <li><a href="{{ route('formula.create') }}">Formula</a></li>
-                    <li><a href="{{ route('category.create') }}">Category</a></li>
-                    <li><a href="{{ route('tag.create') }}">Tag</a></li>
-                </ul>
-            </li>
+            @if(Auth::check())
+                <li class="has-dropdown">
+                    <a href="#"><i class="fa fa-plus fa-fw fa-lg"></i> Add new</a>
+                    <ul class="dropdown">
+                        <li><a href="{{ route('formula.create') }}">Formula</a></li>
+                        <li><a href="{{ route('category.create') }}">Category</a></li>
+                        <li><a href="{{ route('tag.create') }}">Tag</a></li>
+                    </ul>
+                </li>
+            @endif
         </ul>
         <ul class="right">
             <li><a href="https://github.com/Ilyes512/FormulaApp"><i class="fa fa-github fa-fw fa-lg"></i> Github</a></li>
+            @if(Auth::check())
+                <li><a href="{{ route('logout') }}"><i class="fa fa-user fa-fw fa-lg"></i> Logout {{ Auth::user()->username }}</a></li>
+            @else
+                <li><a href="{{ route('login') }}"><i class="fa fa-user fa-fw fa-lg"></i> Login</a></li>
+            @endif
         </ul>
     </section>
 </nav>

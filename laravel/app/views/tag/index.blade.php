@@ -11,7 +11,9 @@
         <tr>
             <th>ID</th>
             <th>Tag</th>
-            <th>Actions</th>
+            @if(Auth::check())
+                <th>Actions</th>
+            @endif
         </tr>
         </thead>
         <tbody>
@@ -19,16 +21,18 @@
             <tr class="tags">
                 <td>{{ $tag->id }}</td>
                 <td><a href="{{ route('tag.show', $tag->id) }}"><span class="label"><i class="fa fa-tag fa-fw fa-lg"></i> {{ $tag->name }}</span></a></td>
-                <td class="actions">
-                    {{ Form::open(['route' => ['tag.edit', $tag->id], 'method' => 'GET']) }}
-                    {{ Form::submit('Edit', ['class' => 'button tiny']) }}
-                    {{ Form::close() }}
+                @if(Auth::check())
+                    <td class="actions">
+                        {{ Form::open(['route' => ['tag.edit', $tag->id], 'method' => 'GET']) }}
+                        {{ Form::submit('Edit', ['class' => 'button tiny']) }}
+                        {{ Form::close() }}
 
-                    {{ Form::open(['route' => ['tag.destroy', $tag->id], 'method' => 'DELETE']) }}
-                    {{ Form::token() }}
-                    {{ Form::submit('Delete', ['class' => 'button tiny alert']) }}
-                    {{ Form::close() }}
-                </td>
+                        {{ Form::open(['route' => ['tag.destroy', $tag->id], 'method' => 'DELETE']) }}
+                        {{ Form::token() }}
+                        {{ Form::submit('Delete', ['class' => 'button tiny alert']) }}
+                        {{ Form::close() }}
+                    </td>
+                @endif
             </tr>
         @endforeach
         </tbody>

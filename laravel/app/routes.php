@@ -16,6 +16,15 @@ Route::get('/', ['as' => 'index', function()
 	return View::make('index');
 }]);
 
+
+/**
+ * User Session
+ */
+Route::get('login', ['as' => 'login', 'uses' => 'SessionController@create']);
+Route::post('login', ['as' => 'login', 'uses' => 'SessionController@store']);
+Route::get('logout', ['as' => 'logout', 'uses' => 'SessionController@destroy']);
+Route::resource('session', 'SessionController', ['only' => ['create', 'store', 'destroy']]);
+
 Route::resource('formula', 'FormulaController');
 
 Route::resource('tag', 'TagController');

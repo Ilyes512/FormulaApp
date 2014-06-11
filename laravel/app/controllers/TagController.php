@@ -7,6 +7,7 @@ class TagController extends \BaseController
     public function __construct()
     {
         $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
+        $this->beforeFilter('auth', ['except' => ['index', 'show']]);
     }
 
     /**

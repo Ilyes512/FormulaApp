@@ -35,27 +35,29 @@
         @endif
     </div>
     <div class="medium-3 columns">
-    @if( $formula->tags->count() > 0 )
-        <div>
-            <h3>Tags:</h3>
-            <p>
-                @foreach($formula->tags as $tag)
-                <a href="{{ route('tag.show', $tag->id) }}"><span class="label">{{ $tag->name }}</span></a>
-                @endforeach
-            </p>
-        </div>
-     @endif
-        <div class="admin">
-            <h3>Actions:</h3>
-            {{ Form::open(['route' => ['formula.edit', $formula->id], 'method' => 'GET']) }}
-            {{ Form::submit('Edit', ['class' => 'inline button tiny']) }}
-            {{ Form::close() }}
+        @if($formula->tags->count() > 0)
+            <div>
+                <h3>Tags:</h3>
+                <p>
+                    @foreach($formula->tags as $tag)
+                    <a href="{{ route('tag.show', $tag->id) }}"><span class="label">{{ $tag->name }}</span></a>
+                    @endforeach
+                </p>
+            </div>
+        @endif
+        @if(Auth::check())
+            <div class="admin">
+                <h3>Actions:</h3>
+                {{ Form::open(['route' => ['formula.edit', $formula->id], 'method' => 'GET']) }}
+                {{ Form::submit('Edit', ['class' => 'inline button tiny']) }}
+                {{ Form::close() }}
 
-            {{ Form::open(['route' => ['formula.destroy', $formula->id], 'method' => 'DELETE']) }}
-            {{ Form::token() }}
-            {{ Form::submit('Delete', ['class' => 'inline button tiny alert']) }}
-            {{ Form::close() }}
-        </div>
+                {{ Form::open(['route' => ['formula.destroy', $formula->id], 'method' => 'DELETE']) }}
+                {{ Form::token() }}
+                {{ Form::submit('Delete', ['class' => 'inline button tiny alert']) }}
+                {{ Form::close() }}
+            </div>
+        @endif
     </div>
 </div>
 
