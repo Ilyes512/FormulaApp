@@ -17,7 +17,8 @@ class FormulaController extends \BaseController
      */
     public function index()
     {
-        return View::make('formula.index')->with('formulas', Formula::with('category')->with('tags')->get());
+        return View::make('formula.index')
+            ->withFormulas(Formula::with('category')->with('tags')->get());
     }
 
 
@@ -43,12 +44,11 @@ class FormulaController extends \BaseController
         $rules['name'][] = 'unique:formulas,name';
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return Redirect::route('formula.create')
                 ->withInput()
                 ->withErrors($validator)
-                ->with('message', 'Oeps, there were some errors!');
-        }
+                ->withMessageAlert('Oeps, there were some errors!');
 
         $formula = new Formula;
         $formula->name = Input::get('name');
@@ -57,12 +57,11 @@ class FormulaController extends \BaseController
         $formula->category_id = Input::get('category');
         $formula->save();
 
-        if (Input::has('tags')) {
+        if (Input::has('tags'))
             $formula->tags()->attach(Input::get('tags'));
-        }
 
         return Redirect::route('formula.index')
-            ->with('message', 'Formula "' . $formula->name . '" is successfully added!');
+            ->withMessageSuccess('Formula "' . $formula->name . '" is successfully added!');
     }
 
 
@@ -79,7 +78,7 @@ class FormulaController extends \BaseController
             ->findOrFail($id);
 
         return View::make('formula.show')
-            ->with('formula', $formula);
+            ->withFormula($formula);
     }
 
 
@@ -96,7 +95,7 @@ class FormulaController extends \BaseController
             ->findOrFail($id);
 
         return View::make('formula.edit')
-            ->with('formula', $formula);
+            ->withFormula($formula);
     }
 
 
@@ -112,12 +111,11 @@ class FormulaController extends \BaseController
         $rules['name'][] = 'unique:formulas,name,' . $id;
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return Redirect::route('formula.edit', $id)
                 ->withInput()
                 ->withErrors($validator)
-                ->with('message', 'Oeps, there were some errors!');
-        }
+                ->withMessageAlert('Oeps, there were some errors!');
 
         $formula = Formula::findOrFail($id);
         $formula->name = Input::get('name');
@@ -128,7 +126,7 @@ class FormulaController extends \BaseController
         $formula->tags()->sync(Input::get('tags', []));
 
         return Redirect::route('formula.show', $id)
-            ->with('message', 'Formula "' . $formula->name . '" has been updated!');
+            ->withMessageSuccess('Formula "' . $formula->name . '" has been updated!');
     }
 
 
@@ -144,7 +142,7 @@ class FormulaController extends \BaseController
         $formula->delete();
 
         return Redirect::route('formula.index')
-            ->with('message', 'Formula "' . $formula->name . '" is deleted!');
+            ->withMessageInfo('Formula "' . $formula->name . '" is deleted!');
     }
 
 

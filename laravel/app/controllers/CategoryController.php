@@ -18,7 +18,7 @@ class CategoryController extends \BaseController
     public function index()
     {
         return View::make('category.index')
-            ->with('categories', Category::all());
+            ->withCategories(Category::all());
     }
 
 
@@ -44,19 +44,18 @@ class CategoryController extends \BaseController
         $rules['name'][] = 'unique:categories,name';
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return Redirect::route('category.create')
                 ->withInput()
                 ->withErrors($validator)
-                ->with('message', 'Oeps, there were some errors!');
-        }
+                ->withMessageAlert('Oeps, there were some errors!');
 
         $category = new Category;
         $category->name = Input::get('name');
         $category->save();
 
         return Redirect::route('category.index')
-            ->with('message', 'Category "' . $category->name . '" has been created!');
+            ->withMessageSuccess('Category "' . $category->name . '" has been created!');
     }
 
 
@@ -76,11 +75,11 @@ class CategoryController extends \BaseController
             throw $e;
         }
 
-        $category = 'Category: ' . $results->first()->category->name;
+        $heading = 'Category: ' . $results->first()->category->name;
 
         return View::make('formula.index')
-            ->with('formulas', $results)
-            ->with('heading', $category);
+            ->withFormulas($results)
+            ->withHeading($heading);
     }
 
 
@@ -94,7 +93,7 @@ class CategoryController extends \BaseController
     {
         $category = Category::findOrFail($id);
         return View::make('category.edit')
-            ->with('category', $category);
+            ->withCategory($category);
     }
 
 
@@ -110,19 +109,18 @@ class CategoryController extends \BaseController
         $rules['name'][] = 'unique:categories,name,' . $id;
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return Redirect::route('category.edit', $id)
                 ->withInput()
                 ->withErrors($validator)
-                ->with('message', 'Oeps, there were some errors!');
-        }
+                ->withMessageAlert('Oeps, there were some errors!');
 
         $category = Category::findOrFail($id);
         $category->name = Input::get('name');
         $category->save();
 
         return Redirect::route('category.index')
-            ->with('message', 'Category "' . $category->name . '" has been updated!');
+            ->withMessageSuccess('Category "' . $category->name . '" has been updated!');
     }
 
 
@@ -138,7 +136,7 @@ class CategoryController extends \BaseController
         $category->delete();
 
         return Redirect::route('category.index')
-            ->with('message', 'Category "' . $category->name . '" is deleted!');
+            ->withMessageInfo('Category "' . $category->name . '" is deleted!');
     }
 
 

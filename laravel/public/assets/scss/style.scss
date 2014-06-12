@@ -34,3 +34,10 @@ label.right {
   // Set the minimum table with at 50% (tags.index and categories.index)
   table { min-width: 50%; }
 }
+
+.alert-box {
+  font-weight: bold;
+  &.success {
+    color: #333;
+  }
+}

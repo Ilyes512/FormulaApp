@@ -18,7 +18,7 @@ class TagController extends \BaseController
     public function index()
     {
         return View::make('tag.index')
-            ->with('tags', Tag::all());
+            ->withTags(Tag::all());
     }
 
 
@@ -44,19 +44,18 @@ class TagController extends \BaseController
         $rules['name'][] = 'unique:tags,name';
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return Redirect::route('tag.create')
                 ->withInput()
                 ->withErrors($validator)
-                ->with('message', 'Oeps, there were some errors!');
-        }
+                ->withMessageAlert('Oeps, there were some errors!');
 
         $tag = new Tag;
         $tag->name = Input::get('name');
         $tag->save();
 
         return Redirect::route('tag.index')
-            ->with('message', 'Tag "' . $tag->name . '" has been created!');
+            ->withMessageSuccess('Tag "' . $tag->name . '" has been created!');
     }
 
 
@@ -81,8 +80,8 @@ class TagController extends \BaseController
         $heading = 'Tag: ' . $results->first()->tags->find($id)->name;
 
         return View::make('formula.index')
-            ->with('formulas', $results)
-            ->with('heading', $heading);
+            ->withFormulas($results)
+            ->withHeading($heading);
     }
 
 
@@ -96,7 +95,7 @@ class TagController extends \BaseController
     {
         $tag = Tag::findOrFail($id);
         return View::make('tag.edit')
-            ->with('tag', $tag);
+            ->withTag($tag);
     }
 
 
@@ -112,19 +111,18 @@ class TagController extends \BaseController
         $rules['name'][] = 'unique:tags,name,' . $id;
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails())
             return Redirect::route('tag.edit', $id)
                 ->withInput()
                 ->withErrors($validator)
-                ->with('message', 'Oeps, there were some errors!');
-        }
+                ->withMessageAlert('Oeps, there were some errors!');
 
         $tag = Tag::findOrFail($id);
         $tag->name = Input::get('name');
         $tag->save();
 
         return Redirect::route('tag.index')
-            ->with('message', 'Tag "' . $tag->name . '" has been updated!');
+            ->withMessageSuccess('Tag "' . $tag->name . '" has been updated!');
     }
 
 
@@ -140,7 +138,7 @@ class TagController extends \BaseController
         $tag->delete();
 
         return Redirect::route('tag.index')
-            ->with('message', 'Tag "' . $tag->name . '" is deleted!');
+            ->withMessageInfo(  'Tag "' . $tag->name . '" is deleted!');
     }
 
 

@@ -23,7 +23,7 @@ class SessionController extends \BaseController
     {
         if (Auth::check())
             return Redirect::home()
-                ->withMessage('You are already logged in as user ' . Auth::user()->username);
+                ->withMessageInfo('You are already logged in as user ' . Auth::user()->username);
 
         return View::make('users.login');
     }
@@ -45,17 +45,17 @@ class SessionController extends \BaseController
             return Redirect::route('login')
                 ->withInput()
                 ->withErrors($validator)
-                ->withMessage('Oeps, there were some errors!');
+                ->withMessageAlert('Oeps, there were some errors!');
 
         // Try and login the user
         if (Auth::attempt($credentials, $remember))
             return Redirect::intended('/')
-                ->withMessage('You succesfully logged in!');
+                ->withMessageSuccess('You succesfully logged in!');
 
         // Assume login failed
         return Redirect::route('login')
             ->withInput()
-            ->withMessage('Invalid Username/Password combination!');
+            ->withMessageAlert('Invalid Username/Password combination!');
     }
 
     /**
@@ -72,10 +72,10 @@ class SessionController extends \BaseController
 
         if (Auth::check())
             return Redirect::home()
-                ->withMessage('Logging out failed! Try again!');
+                ->withMessageAlert('Logging out failed! Try again!');
 
         return Redirect::home()
-            ->withMessage('User ' . $user->username . ' has been logged out succesfully!');
+            ->withMessageSuccess('User ' . $user->username . ' has been logged out succesfully!');
     }
 
 }

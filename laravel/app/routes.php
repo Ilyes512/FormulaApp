@@ -30,3 +30,15 @@ Route::resource('formula', 'FormulaController');
 Route::resource('tag', 'TagController');
 
 Route::resource('category', 'CategoryController');
+
+View::composer('partials.message', function($view) {
+    $messagesTypes = [
+        'message' => '',
+        'message_alert' => ' alert',
+        'message_warning' => ' warning',
+        'message_success' => ' success',
+        'message_info' => ' info',
+        'message_secondary' => ' secondary'
+    ];
+    $view->withMessagesTypes($messagesTypes);
+});
