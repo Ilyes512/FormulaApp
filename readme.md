@@ -14,16 +14,31 @@ I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash))
 
 \* You can check if Vagrant is running with `$ vagrant status` from within the folder or with `$ vagrant global-status` globally.
 
+Default users that will be seeded in local environment:
+
+```
+Username: Admin   Password: admin  
+Username: Demo    Password: demo
+```
+
 
 ## Things that will be added
 1. ~~Validation~~ Done
 2. ~~Add CSRF-protection~~ Done
 3. Add a confirmation before deleting a formula/category/tag
 4. Basic User Authentication
+	- ~~Basic login~~ Done
+	- ~~Make edit/delete actions only possible for logged in users~~ Done
+	- Add a registration form for new users
+	- Send confirmation mail
+	- Resetting user password
+	- Couple formula's, tag's, categories to users (see who created what)
+	- Restrict edit/delete actions to owner
+	- Make it possible to create public and private formulas
 5. Add a sort of TeX WYSIWYG-editor ([Mathquill](https://github.com/mathquill/mathquill))
 6. ~~Add some Fontawesomeness (icons)~~ Done
 7. Add page pagination
-8. Ready this app to be deployed to Heroku for demoing purposes.
+8. Ready this app to be deployed to Heroku for demoing purposes
 
 
 ## Some screens
