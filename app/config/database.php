@@ -1,5 +1,14 @@
 <?php
 
+// Retrieve the primary DB URL used by the Heroku App
+$url = parse_url(getenv('DATABASE_URL'));
+
+$host = $url['host'];
+$port = $url['port'];
+$username = $url['user'];
+$password = $url['pass'];
+$database = substr($url['path'], 1);
+
 return array(
 
 	/*
@@ -26,7 +35,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'pgsql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,10 +74,11 @@ return array(
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
+			'host'     => $host,
+			'database' => $database,
+			'port'     => $port,
+			'username' => $username,
+			'password' => $password,
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
