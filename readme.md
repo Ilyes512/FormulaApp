@@ -2,6 +2,8 @@
 
 This is a demo app made with the Framework [Laravel](http://laravel.com/) (using version 4.2, but it will also work fine with 4.1.\*). The app is made just to get some experience with the framework. It doesn't use any fancy Design Patterns. This app should be understandable for anyone that read the Laravel Documentation or any of the Laravel books out there.
 
+### [Live demo](http://laraformula.herokuapp.com/)
+
 ## Instructions
 I included a `Vagrantfile` ([Vaprobash](https://github.com/fideloper/Vaprobash)) with which you are ready to go. You will need to have [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed (or something familiar that will work with Vagrant) and [Vagrant](http://www.vagrantup.com/downloads.html). 
 
@@ -20,7 +22,6 @@ Default users that will be seeded in local environment:
 Username: Admin   Password: admin  
 Username: Demo    Password: demo
 ```
-
 
 ## Things that will be added
 1. ~~Validation~~ Done
