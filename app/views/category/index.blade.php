@@ -29,7 +29,6 @@
 
                         @if($category->id != 1)
                             {{ Form::open(['route' => ['category.destroy', $category->id], 'method' => 'DELETE']) }}
-                            {{ Form::token() }}
                             {{ Form::submit('Destroy', ['class' => 'inline button tiny alert']) }}
                             {{ Form::close() }}
                         @endif

@@ -28,7 +28,6 @@
                         {{ Form::close() }}
 
                         {{ Form::open(['route' => ['tag.destroy', $tag->id], 'method' => 'DELETE']) }}
-                        {{ Form::token() }}
                         {{ Form::submit('Delete', ['class' => 'button tiny alert']) }}
                         {{ Form::close() }}
                     </td>

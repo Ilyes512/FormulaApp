@@ -36,7 +36,6 @@
                         {{ Form::close() }}
 
                         {{ Form::open(['route' => ['formula.destroy', $formula->id], 'method' => 'DELETE']) }}
-                        {{ Form::token() }}
                         {{ Form::submit('Delete', ['class' => 'button tiny alert']) }}
                         {{ Form::close() }}
                     </td>
