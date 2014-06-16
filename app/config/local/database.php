@@ -17,6 +17,7 @@ return array(
             'driver'   => 'pgsql',
             'host'     => 'localhost',
             'database' => 'formula',
+            'port'     => '5432',
             'username' => 'root',
             'password' => 'root',
             'charset'  => 'utf8',

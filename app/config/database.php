@@ -1,13 +1,22 @@
 <?php
 
-// Retrieve the primary DB URL used by the Heroku App
-$url = parse_url(getenv('DATABASE_URL'));
+$host = '';
+$port = '';
+$username = '';
+$password = '';
+$database = '';
 
-$host = $url['host'];
-$port = $url['port'];
-$username = $url['user'];
-$password = $url['pass'];
-$database = substr($url['path'], 1);
+if (App::environment('production')) {
+
+    // Retrieve the primary DB URL used by the Heroku App
+    $url = parse_url(getenv('DATABASE_URL'));
+
+    $host = $url['host'];
+    $port = $url['port'];
+    $username = $url['user'];
+    $password = $url['pass'];
+    $database = substr($url['path'], 1);
+}
 
 return array(
 
@@ -59,17 +68,6 @@ return array(
 			'driver'   => 'sqlite',
 			'database' => __DIR__.'/../database/production.sqlite',
 			'prefix'   => '',
-		),
-
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
 		),
 
 		'pgsql' => array(
