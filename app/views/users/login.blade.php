@@ -27,7 +27,7 @@
                 </div>
                 <div class="row">
                     <div class="medium-offset-3 medium-9 columns">
-                        {{ Form::checkbox('remember') }}
+                        {{ Form::checkbox('remember', 1, null, ['id' => 'remember']) }}
                         {{ Form::label('remember', 'Remember me!') }}
                     </div>
                 </div>
