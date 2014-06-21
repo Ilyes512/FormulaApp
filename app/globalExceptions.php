@@ -1,7 +1,7 @@
 <?php
 
 App::error(function (\Illuminate\Session\TokenMismatchException $e) {
-    return Redirect::route('index')
+    return Redirect::route('home')
         ->with('message', 'Please use the forms directly from the site!');
 });
 
@@ -13,11 +13,11 @@ App::error(function (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
     ];
 
     if (isset($message[$e->getModel()])) {
-        return Redirect::route('index')
+        return Redirect::route('home')
             ->with('message', $message[$e->getModel()]);
     }
 
-    return Redirect::route('index')
+    return Redirect::route('home')
         ->with('message', 'The requested entry does not exist!');
 });
 
