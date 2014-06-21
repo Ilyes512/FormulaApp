@@ -80,3 +80,20 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| Restrict Actions Filter
+|--------------------------------------------------------------------------
+|
+| This is an filter for restricting actions like creating, deleting and
+| editing records. Add a key 'restrict_actions' with a boolean value to
+| the app.php config file to enable or disable the restriction.
+|
+*/
+
+Route::filter('restrict_actions', function() {
+    if (Config::get('app.restrict_actions'))
+        return Redirect::back()
+            ->withMessage('Sorry, but creating, deleting and editing is restricted!');
+});

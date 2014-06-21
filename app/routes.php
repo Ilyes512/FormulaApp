@@ -11,11 +11,14 @@
 |
 */
 
+// You can set 'restrict_actions' in the app.php config file to
+// disable creating, deleting and editing of records.
+Route::whenRegex('/formula|tag|category/', 'restrict_actions', ['post', 'put', 'patch', 'delete']);
+
 Route::get('/', ['as' => 'home', function()
 {
 	return View::make('index');
 }]);
-
 
 /**
  * User Session

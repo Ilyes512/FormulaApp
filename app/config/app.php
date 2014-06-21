@@ -2,6 +2,17 @@
 
 return array(
 
+    /*
+    |--------------------------------------------------------------------------
+    | Restrict Actions
+    |--------------------------------------------------------------------------
+    |
+    | Set this to true to restrict creating, deleting and editing records.
+    |
+    */
+
+    'restrict_actions' => false,
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Debug Mode
