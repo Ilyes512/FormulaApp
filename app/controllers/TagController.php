@@ -2,8 +2,8 @@
 
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class TagController extends \BaseController
-{
+class TagController extends \BaseController {
+
     public function __construct()
     {
         $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
@@ -21,7 +21,6 @@ class TagController extends \BaseController
             ->withTags(Tag::all());
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +31,6 @@ class TagController extends \BaseController
         return View::make('tag.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,9 +38,9 @@ class TagController extends \BaseController
      */
     public function store()
     {
-        $rules = Tag::$validationRules;
+        $rules           = Tag::$validationRules;
         $rules['name'][] = 'unique:tags,name';
-        $validator = Validator::make(Input::all(), $rules);
+        $validator       = Validator::make(Input::all(), $rules);
 
         if ($validator->fails())
             return Redirect::route('tag.create')
@@ -50,7 +48,7 @@ class TagController extends \BaseController
                 ->withErrors($validator)
                 ->withMessageAlert('Oeps, there were some errors!');
 
-        $tag = new Tag;
+        $tag       = new Tag;
         $tag->name = Input::get('name');
         $tag->save();
 
@@ -58,11 +56,11 @@ class TagController extends \BaseController
             ->withMessageSuccess('Tag "' . $tag->name . '" has been created!');
     }
 
-
     /**
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -84,32 +82,33 @@ class TagController extends \BaseController
             ->withHeading($heading);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function edit($id)
     {
         $tag = Tag::findOrFail($id);
+
         return View::make('tag.edit')
             ->withTag($tag);
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function update($id)
     {
-        $rules = Tag::$validationRules;
+        $rules           = Tag::$validationRules;
         $rules['name'][] = 'unique:tags,name,' . $id;
-        $validator = Validator::make(Input::all(), $rules);
+        $validator       = Validator::make(Input::all(), $rules);
 
         if ($validator->fails())
             return Redirect::route('tag.edit', $id)
@@ -117,7 +116,7 @@ class TagController extends \BaseController
                 ->withErrors($validator)
                 ->withMessageAlert('Oeps, there were some errors!');
 
-        $tag = Tag::findOrFail($id);
+        $tag       = Tag::findOrFail($id);
         $tag->name = Input::get('name');
         $tag->save();
 
@@ -125,11 +124,11 @@ class TagController extends \BaseController
             ->withMessageSuccess('Tag "' . $tag->name . '" has been updated!');
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function destroy($id)
@@ -138,8 +137,6 @@ class TagController extends \BaseController
         $tag->delete();
 
         return Redirect::route('tag.index')
-            ->withMessageInfo(  'Tag "' . $tag->name . '" is deleted!');
+            ->withMessageInfo('Tag "' . $tag->name . '" is deleted!');
     }
-
-
 }

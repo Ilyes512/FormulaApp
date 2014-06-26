@@ -1,7 +1,6 @@
 <?php
 
-class TagsTableSeeder extends Seeder
-{
+class TagsTableSeeder extends Seeder {
 
     public function run()
     {
@@ -18,5 +17,4 @@ class TagsTableSeeder extends Seeder
             $tag->save();
         }
     }
-
 }

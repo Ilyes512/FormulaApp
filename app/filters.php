@@ -11,15 +11,12 @@
 |
 */
 
-App::before(function($request)
-{
-	//
+App::before(function ($request) {
+    //
 });
 
-
-App::after(function($request, $response)
-{
-	//
+App::after(function ($request, $response) {
+    //
 });
 
 /*
@@ -33,17 +30,14 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
-	if (Auth::guest())
+Route::filter('auth', function () {
+    if (Auth::guest())
         return Redirect::guest('login')
             ->withMessage('Please login first!');
 });
 
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+Route::filter('auth.basic', function () {
+    return Auth::basic();
 });
 
 /*
@@ -57,9 +51,8 @@ Route::filter('auth.basic', function()
 |
 */
 
-Route::filter('guest', function()
-{
-	if (Auth::check()) return Redirect::to('/');
+Route::filter('guest', function () {
+    if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -73,12 +66,10 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
-{
-	if (Session::token() != Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+Route::filter('csrf', function () {
+    if (Session::token() != Input::get('_token')) {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });
 
 /*
@@ -92,7 +83,7 @@ Route::filter('csrf', function()
 |
 */
 
-Route::filter('restrict_actions', function() {
+Route::filter('restrict_actions', function () {
     if (Config::get('app.restrict_actions'))
         return Redirect::back()
             ->withMessage('Sorry, but creating, deleting and editing is restricted!');

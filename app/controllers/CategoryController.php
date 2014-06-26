@@ -2,8 +2,8 @@
 
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CategoryController extends \BaseController
-{
+class CategoryController extends \BaseController {
+
     public function __construct()
     {
         $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
@@ -21,7 +21,6 @@ class CategoryController extends \BaseController
             ->withCategories(Category::all());
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +31,6 @@ class CategoryController extends \BaseController
         return View::make('category.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,9 +38,9 @@ class CategoryController extends \BaseController
      */
     public function store()
     {
-        $rules = Category::$validationRules;
+        $rules           = Category::$validationRules;
         $rules['name'][] = 'unique:categories,name';
-        $validator = Validator::make(Input::all(), $rules);
+        $validator       = Validator::make(Input::all(), $rules);
 
         if ($validator->fails())
             return Redirect::route('category.create')
@@ -50,7 +48,7 @@ class CategoryController extends \BaseController
                 ->withErrors($validator)
                 ->withMessageAlert('Oeps, there were some errors!');
 
-        $category = new Category;
+        $category       = new Category;
         $category->name = Input::get('name');
         $category->save();
 
@@ -58,11 +56,11 @@ class CategoryController extends \BaseController
             ->withMessageSuccess('Category "' . $category->name . '" has been created!');
     }
 
-
     /**
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -82,32 +80,33 @@ class CategoryController extends \BaseController
             ->withHeading($heading);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function edit($id)
     {
         $category = Category::findOrFail($id);
+
         return View::make('category.edit')
             ->withCategory($category);
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function update($id)
     {
-        $rules = Category::$validationRules;
+        $rules           = Category::$validationRules;
         $rules['name'][] = 'unique:categories,name,' . $id;
-        $validator = Validator::make(Input::all(), $rules);
+        $validator       = Validator::make(Input::all(), $rules);
 
         if ($validator->fails())
             return Redirect::route('category.edit', $id)
@@ -115,7 +114,7 @@ class CategoryController extends \BaseController
                 ->withErrors($validator)
                 ->withMessageAlert('Oeps, there were some errors!');
 
-        $category = Category::findOrFail($id);
+        $category       = Category::findOrFail($id);
         $category->name = Input::get('name');
         $category->save();
 
@@ -123,11 +122,11 @@ class CategoryController extends \BaseController
             ->withMessageSuccess('Category "' . $category->name . '" has been updated!');
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function destroy($id)
@@ -138,6 +137,4 @@ class CategoryController extends \BaseController
         return Redirect::route('category.index')
             ->withMessageInfo('Category "' . $category->name . '" is deleted!');
     }
-
-
 }

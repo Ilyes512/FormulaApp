@@ -1,7 +1,6 @@
 <?php
 
-class SessionController extends \BaseController
-{
+class SessionController extends \BaseController {
 
     static public $rules = [
         'username' => 'required',
@@ -37,8 +36,8 @@ class SessionController extends \BaseController
     public function store()
     {
         $credentials = Input::only('username', 'password');
-        $remember = Input::has('remember');
-        $validator = Validator::make($credentials, self::$rules);
+        $remember    = Input::has('remember');
+        $validator   = Validator::make($credentials, self::$rules);
 
         // Validate the given login credentials
         if ($validator->fails())
@@ -63,6 +62,7 @@ class SessionController extends \BaseController
      * DELETE /session/{id}
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function destroy()
@@ -77,5 +77,4 @@ class SessionController extends \BaseController
         return Redirect::home()
             ->withMessageSuccess('User ' . $user->username . ' has been logged out succesfully!');
     }
-
 }

@@ -15,9 +15,8 @@
 // disable creating, deleting and editing of records.
 Route::whenRegex('/formula|tag|category/', 'restrict_actions', ['post', 'put', 'patch', 'delete']);
 
-Route::get('/', ['as' => 'home', function()
-{
-	return View::make('index');
+Route::get('/', ['as' => 'home', function () {
+    return View::make('index');
 }]);
 
 /**
@@ -34,13 +33,13 @@ Route::resource('tag', 'TagController');
 
 Route::resource('category', 'CategoryController');
 
-View::composer('partials.message', function($view) {
+View::composer('partials.message', function ($view) {
     $messagesTypes = [
-        'message' => '',
-        'message_alert' => ' alert',
-        'message_warning' => ' warning',
-        'message_success' => ' success',
-        'message_info' => ' info',
+        'message'           => '',
+        'message_alert'     => ' alert',
+        'message_warning'   => ' warning',
+        'message_success'   => ' success',
+        'message_info'      => ' info',
         'message_secondary' => ' secondary'
     ];
     $view->withMessagesTypes($messagesTypes);

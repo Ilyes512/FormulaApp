@@ -1,13 +1,15 @@
 <?php
 
 class Tag extends \Eloquent {
-	protected $fillable = [];
+
+    protected $fillable = [];
 
     public static $validationRules = [
         'name' => ['required', 'max:255']
     ];
 
-    public function Formulas() {
+    public function Formulas()
+    {
         return $this->belongsToMany('Formula')->withTimestamps();
     }
 }

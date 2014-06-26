@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateFormulasTable extends Migration
-{
+class CreateFormulasTable extends Migration {
 
     /**
      * Run the migrations.
@@ -25,7 +24,6 @@ class CreateFormulasTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
@@ -35,5 +33,4 @@ class CreateFormulasTable extends Migration
     {
         Schema::drop('formulas');
     }
-
 }

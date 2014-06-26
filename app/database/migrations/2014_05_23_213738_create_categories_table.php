@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCategoriesTable extends Migration
-{
+class CreateCategoriesTable extends Migration {
 
     /**
      * Run the migrations.
@@ -21,7 +20,6 @@ class CreateCategoriesTable extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
@@ -31,5 +29,4 @@ class CreateCategoriesTable extends Migration
     {
         Schema::drop('categories');
     }
-
 }

@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateFormulaTag extends Migration
-{
+class CreateFormulaTag extends Migration {
 
     /**
      * Run the migrations.
@@ -23,7 +22,6 @@ class CreateFormulaTag extends Migration
         });
     }
 
-
     /**
      * Reverse the migrations.
      *
@@ -33,5 +31,4 @@ class CreateFormulaTag extends Migration
     {
         Schema::drop('formula_tag');
     }
-
 }

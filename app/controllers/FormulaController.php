@@ -2,8 +2,8 @@
 
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class FormulaController extends \BaseController
-{
+class FormulaController extends \BaseController {
+
     public function __construct()
     {
         $this->beforeFilter('csrf', ['on' => 'post', 'put', 'patch', 'delete']);
@@ -21,7 +21,6 @@ class FormulaController extends \BaseController
             ->withFormulas(Formula::with('category')->with('tags')->get());
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +31,6 @@ class FormulaController extends \BaseController
         return View::make('formula.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,9 +38,9 @@ class FormulaController extends \BaseController
      */
     public function store()
     {
-        $rules = Formula::$validationRules;
+        $rules           = Formula::$validationRules;
         $rules['name'][] = 'unique:formulas,name';
-        $validator = Validator::make(Input::all(), $rules);
+        $validator       = Validator::make(Input::all(), $rules);
 
         if ($validator->fails())
             return Redirect::route('formula.create')
@@ -50,10 +48,10 @@ class FormulaController extends \BaseController
                 ->withErrors($validator)
                 ->withMessageAlert('Oeps, there were some errors!');
 
-        $formula = new Formula;
-        $formula->name = Input::get('name');
-        $formula->formula = Input::get('formula');
-        $formula->info = Input::get('description');
+        $formula              = new Formula;
+        $formula->name        = Input::get('name');
+        $formula->formula     = Input::get('formula');
+        $formula->info        = Input::get('description');
         $formula->category_id = Input::get('category');
         $formula->save();
 
@@ -64,11 +62,11 @@ class FormulaController extends \BaseController
             ->withMessageSuccess('Formula "' . $formula->name . '" is successfully added!');
     }
 
-
     /**
      * Display the specified resource.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -81,11 +79,11 @@ class FormulaController extends \BaseController
             ->withFormula($formula);
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function edit($id)
@@ -98,18 +96,18 @@ class FormulaController extends \BaseController
             ->withFormula($formula);
     }
 
-
     /**
      * Update the specified resource in storage.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function update($id)
     {
-        $rules = Formula::$validationRules;
+        $rules           = Formula::$validationRules;
         $rules['name'][] = 'unique:formulas,name,' . $id;
-        $validator = Validator::make(Input::all(), $rules);
+        $validator       = Validator::make(Input::all(), $rules);
 
         if ($validator->fails())
             return Redirect::route('formula.edit', $id)
@@ -117,10 +115,10 @@ class FormulaController extends \BaseController
                 ->withErrors($validator)
                 ->withMessageAlert('Oeps, there were some errors!');
 
-        $formula = Formula::findOrFail($id);
-        $formula->name = Input::get('name');
-        $formula->formula = Input::get('formula');
-        $formula->info = Input::get('description');
+        $formula              = Formula::findOrFail($id);
+        $formula->name        = Input::get('name');
+        $formula->formula     = Input::get('formula');
+        $formula->info        = Input::get('description');
         $formula->category_id = Input::get('category');
         $formula->save();
         $formula->tags()->sync(Input::get('tags', []));
@@ -129,11 +127,11 @@ class FormulaController extends \BaseController
             ->withMessageSuccess('Formula "' . $formula->name . '" has been updated!');
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int $id
+     *
      * @return Response
      */
     public function destroy($id)
@@ -144,6 +142,4 @@ class FormulaController extends \BaseController
         return Redirect::route('formula.index')
             ->withMessageInfo('Formula "' . $formula->name . '" is deleted!');
     }
-
-
 }

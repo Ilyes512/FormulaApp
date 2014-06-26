@@ -1,8 +1,6 @@
 <?php
 
-
-class CategoriesTableSeeder extends Seeder
-{
+class CategoriesTableSeeder extends Seeder {
 
     public function run()
     {
@@ -19,5 +17,4 @@ class CategoriesTableSeeder extends Seeder
             $category->save();
         }
     }
-
 }
