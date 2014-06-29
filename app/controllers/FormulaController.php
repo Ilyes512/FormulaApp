@@ -1,7 +1,5 @@
 <?php
 
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
-
 class FormulaController extends \BaseController {
 
     public function __construct()
@@ -38,28 +36,20 @@ class FormulaController extends \BaseController {
      */
     public function store()
     {
-        $rules           = Formula::$validationRules;
-        $rules['name'][] = 'unique:formulas,name';
-        $validator       = Validator::make(Input::all(), $rules);
+        $formula = new Formula;
 
-        if ($validator->fails())
-            return Redirect::route('formula.create')
-                ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+        if ($formula->save()) {
+            // Add the formula tags
+            if (Input::has('tags'))
+                $formula->tags()->attach(Input::get('tags'));
 
-        $formula              = new Formula;
-        $formula->name        = Input::get('name');
-        $formula->formula     = Input::get('formula');
-        $formula->info        = Input::get('description');
-        $formula->category_id = Input::get('category');
-        $formula->save();
+            return Redirect::route('formula.index')
+                ->withMessageSuccess('Formula "' . $formula->name . '" is successfully added!');
+        }
 
-        if (Input::has('tags'))
-            $formula->tags()->attach(Input::get('tags'));
-
-        return Redirect::route('formula.index')
-            ->withMessageSuccess('Formula "' . $formula->name . '" is successfully added!');
+        return Redirect::route('formula.create')
+            ->withErrors($formula->errors())
+            ->withMessageAlert('Oeps, there were some errors!');
     }
 
     /**
@@ -105,26 +95,20 @@ class FormulaController extends \BaseController {
      */
     public function update($id)
     {
-        $rules           = Formula::$validationRules;
-        $rules['name'][] = 'unique:formulas,name,' . $id;
-        $validator       = Validator::make(Input::all(), $rules);
+        // We use the Ardent packages to hydrate the input entries
+        $formula = Formula::findOrFail($id);
 
-        if ($validator->fails())
-            return Redirect::route('formula.edit', $id)
-                ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+        if ($formula->updateUniques ()) {
+            $formula->tags()->sync(Input::get('tags', []));
 
-        $formula              = Formula::findOrFail($id);
-        $formula->name        = Input::get('name');
-        $formula->formula     = Input::get('formula');
-        $formula->info        = Input::get('description');
-        $formula->category_id = Input::get('category');
-        $formula->save();
-        $formula->tags()->sync(Input::get('tags', []));
+            return Redirect::route('formula.show', $id)
+                ->withMessageSuccess('Formula "' . $formula->name . '" has been updated!');
+        }
 
-        return Redirect::route('formula.show', $id)
-            ->withMessageSuccess('Formula "' . $formula->name . '" has been updated!');
+        // Returning an error!
+        return Redirect::route('formula.edit', $id)
+            ->withErrors($formula->errors())
+            ->withMessageAlert('Oeps, there were some errors!');
     }
 
     /**

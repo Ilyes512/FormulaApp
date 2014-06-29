@@ -20,13 +20,13 @@
                         {{ $errors->first('name', '<small class="error">:message</small>') }}
                     </div>
                 </div>
-                <div class="row{{ $errors->has('category') ? ' error' : '' }}">
+                <div class="row{{ $errors->has('category_id') ? ' error' : '' }}">
                     <div class="medium-3 columns">
-                        {{ Form::label('category', 'Category: ', ['class' => 'small-only-text-left text-right inline']) }}
+                        {{ Form::label('category_id', 'Category: ', ['class' => 'small-only-text-left text-right inline']) }}
                     </div>
                     <div class="medium-9 columns">
-                        {{ Form::select('category', Category::lists('name', 'id'), $formula->category_id, ['class' => 'chosen-select']) }}
-                        {{ $errors->first('category', '<small class="error">:message</small>') }}
+                        {{ Form::select('category_id', Category::lists('name', 'id'), $formula->category_id, ['class' => 'chosen-select']) }}
+                        {{ $errors->first('category_id', '<small class="error">:message</small>') }}
                     </div>
                 </div>
                 <div class="row{{ $errors->has('formula') ? ' error' : '' }}">

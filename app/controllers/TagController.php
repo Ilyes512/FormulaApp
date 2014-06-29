@@ -1,6 +1,6 @@
 <?php
 
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TagController extends \BaseController {
 
@@ -38,22 +38,18 @@ class TagController extends \BaseController {
      */
     public function store()
     {
-        $rules           = Tag::$validationRules;
-        $rules['name'][] = 'unique:tags,name';
-        $validator       = Validator::make(Input::all(), $rules);
+        // We use the Ardent packages to hydrate the input entries
+        $tag = new Tag;
 
-        if ($validator->fails())
-            return Redirect::route('tag.create')
-                ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+        if ($tag->save())
+            // Successfully created!
+            return Redirect::route('tag.index')
+                ->withMessageSuccess('Tag "' . $tag->name . '" has been created!');
 
-        $tag       = new Tag;
-        $tag->name = Input::get('name');
-        $tag->save();
-
-        return Redirect::route('tag.index')
-            ->withMessageSuccess('Tag "' . $tag->name . '" has been created!');
+        // Returning an error!
+        return Redirect::route('tag.create')
+            ->withErrors($tag->errors())
+            ->withMessageAlert('Oeps, there were some errors!');
     }
 
     /**
@@ -106,22 +102,15 @@ class TagController extends \BaseController {
      */
     public function update($id)
     {
-        $rules           = Tag::$validationRules;
-        $rules['name'][] = 'unique:tags,name,' . $id;
-        $validator       = Validator::make(Input::all(), $rules);
+        $tag = Tag::findOrFail($id);
 
-        if ($validator->fails())
-            return Redirect::route('tag.edit', $id)
-                ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+        if ($tag->updateUniques())
+            return Redirect::route('tag.index')
+                ->withMessageSuccess('Tag "' . $tag->name . '" has been updated!');
 
-        $tag       = Tag::findOrFail($id);
-        $tag->name = Input::get('name');
-        $tag->save();
-
-        return Redirect::route('tag.index')
-            ->withMessageSuccess('Tag "' . $tag->name . '" has been updated!');
+        return Redirect::route('tag.edit', $id)
+            ->withErrors($tag->errors())
+            ->withMessageAlert('Oeps, there were some errors!');
     }
 
     /**

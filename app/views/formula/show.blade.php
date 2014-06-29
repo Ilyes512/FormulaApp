@@ -25,7 +25,7 @@
         <div class="panel callout">
             \[{{ $formula->formula }}\]
         </div>
-        @if( isset ( $formula->info ) )
+        @if(strlen(trim($formula->info)) > 0)
         <h3>Info:</h3>
         <div class="panel">
             <p>

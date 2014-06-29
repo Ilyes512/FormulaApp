@@ -1,24 +1,21 @@
 <?php
 
-class Formula extends \Eloquent {
+use LaravelBook\Ardent\Ardent;
 
-    protected $fillable = [];
+class Formula extends Ardent {
 
-    public static $validationRules = [
-        'name'     => ['required', 'max:255'],
-        'category' => ['required', 'exists:categories,id'],
-        'formula'  => ['required', 'max:21844'],
-        'info'     => 'max:21844',
-        'tags'     => ['exists:tags,id']
+    public static $rules = [
+        'name'        => ['required', 'max:255'],
+        'category_id' => ['required', 'exists:categories,id'],
+        'formula'     => ['required', 'max:21844', 'unique:formulas'],
+        'info'        => 'max:21844',
+        'tags'        => ['exists:tags,id']
     ];
-
-    public function category()
-    {
-        return $this->belongsTo('Category');
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany('Tag')->withTimestamps();
-    }
+    public static $relationsData = [
+        'category' => [SELF::BELONGS_TO, 'Category'],
+        'tags'     => [SELF::BELONGS_TO_MANY, 'Tag', 'timestamps' => true]
+    ];
+    public $autoHydrateEntityFromInput = true; // hydrates on new entries' validation
+    public $forceEntityHydrationFromInput = true; // hydrates whenever validation is called
+    protected $fillable = ['name', 'category_id', 'formula', 'info'];
 }

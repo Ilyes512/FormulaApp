@@ -1,15 +1,16 @@
 <?php
 
-class Tag extends \Eloquent {
+use LaravelBook\Ardent\Ardent;
 
-    protected $fillable = [];
+class Tag extends Ardent {
 
-    public static $validationRules = [
-        'name' => ['required', 'max:255']
+    public static $rules = [
+        'name' => ['required', 'max:255', 'unique:tags']
     ];
-
-    public function Formulas()
-    {
-        return $this->belongsToMany('Formula')->withTimestamps();
-    }
+    public static $relationsData = [
+        'formulas' => [SELF::BELONGS_TO_MANY, 'Formula', 'timestamps' => true]
+    ];
+    public $autoHydrateEntityFromInput = true; // hydrates whenever validation is called
+    public $forceEntityHydrationFromInput = true; // hydrates on new entries' validation
+    protected $fillable = ['name'];
 }

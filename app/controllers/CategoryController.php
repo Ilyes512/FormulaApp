@@ -1,6 +1,6 @@
 <?php
 
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoryController extends \BaseController {
 
@@ -38,22 +38,18 @@ class CategoryController extends \BaseController {
      */
     public function store()
     {
-        $rules           = Category::$validationRules;
-        $rules['name'][] = 'unique:categories,name';
-        $validator       = Validator::make(Input::all(), $rules);
+        // We use the Ardent packages to hydrate the input entries
+        $category = new Category;
 
-        if ($validator->fails())
-            return Redirect::route('category.create')
-                ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+        if ($category->save())
+            // Successfully created!
+            return Redirect::route('category.index')
+                ->withMessageSuccess('Category "' . $category->name . '" has been created!');
 
-        $category       = new Category;
-        $category->name = Input::get('name');
-        $category->save();
-
-        return Redirect::route('category.index')
-            ->withMessageSuccess('Category "' . $category->name . '" has been created!');
+        // Returning an error!
+        return Redirect::route('category.create')
+            ->withErrors($category->errors())
+            ->withMessageAlert('Oeps, there were some errors!');
     }
 
     /**
@@ -104,22 +100,15 @@ class CategoryController extends \BaseController {
      */
     public function update($id)
     {
-        $rules           = Category::$validationRules;
-        $rules['name'][] = 'unique:categories,name,' . $id;
-        $validator       = Validator::make(Input::all(), $rules);
+        $category = Category::findOrFail($id);
 
-        if ($validator->fails())
-            return Redirect::route('category.edit', $id)
-                ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+        if ($category->updateUniques())
+            return Redirect::route('category.index')
+                ->withMessageSuccess('Category "' . $category->name . '" has been updated!');
 
-        $category       = Category::findOrFail($id);
-        $category->name = Input::get('name');
-        $category->save();
-
-        return Redirect::route('category.index')
-            ->withMessageSuccess('Category "' . $category->name . '" has been updated!');
+        return Redirect::route('category.edit', $id)
+            ->withErrors($category->errors())
+            ->withMessageAlert('Oeps, there were some errors!');
     }
 
     /**

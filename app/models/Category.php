@@ -1,15 +1,16 @@
 <?php
 
-class Category extends \Eloquent {
+use LaravelBook\Ardent\Ardent;
 
-    protected $fillable = [];
+class Category extends Ardent {
 
-    public static $validationRules = [
-        'name' => ['required', 'between:1,255']
+    public static $rules = [
+        'name' => ['required', 'max:255', 'unique:categories']
     ];
-
-    public function formulas()
-    {
-        return $this->hasMany('Formula');
-    }
+    public static $relationsData = [
+        'formulas' => [SELF::HAS_MANY, 'Formula']
+    ];
+    public $autoHydrateEntityFromInput = true; // hydrates whenever validation is called
+    public $forceEntityHydrationFromInput = true; // hydrates on new entries' validation
+    protected $fillable = ['name'];
 }
