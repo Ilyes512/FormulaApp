@@ -13,7 +13,7 @@
   "homepage": "https://github.com/Ilyes512",
   "private": true,
   "devDependencies": {
-    "foundation": "~5.2.2",
+    "foundation": "~5.3.0",
     "chosen": "~1.1.0",
     "MathJax": "*",
     "fontawesome": "~4.1.0"
