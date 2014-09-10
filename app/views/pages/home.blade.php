@@ -13,7 +13,7 @@
                 <li>HTML-CSS</li>
                 <li>SVG</li>
             </ul>
-            <p>{{ link_to_route('register_path', 'Sign Up', null, ['class' => 'btn btn-lg btn-primary']) }}</p>
+            {{--<p>{{ link_to_route('register_path', 'Sign Up', null, ['class' => 'btn btn-lg btn-primary']) }}</p>--}}
         </div>
     </div>
 </div>
