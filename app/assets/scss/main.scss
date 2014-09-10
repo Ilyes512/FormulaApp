@@ -1,0 +1,78 @@
+@import "bootstrap/bootstrap";
+@import "fontawesome/font-awesome";
+@import "selectize/selectize.bootstrap3";
+
+// Misc
+
+// Firefox has some awkward fieldset styling involving width that interferes with the responsive table.
+// This Firefox specific "hack" will fix it:
+@-moz-document url-prefix() {
+  fieldset {
+    display: table-cell;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+body {
+  padding-top: 70px;
+
+  background-color: #fff;
+  background-image: url('/assets/img/desk.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.main {
+  background-color: #fff;
+  opacity: 0.9;
+  border-radius: 2px;
+}
+
+.container h1:first-of-type {
+  margin-top: 0;
+}
+
+.ghost {
+  //opacity: 0.8;
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.page-header.inverted {
+  border-bottom-color: #333;
+}
+
+.actions {
+  form {
+    margin-top: 5px;
+    float: left;
+  }
+  input {
+    display: inline-block;
+    margin-left: 5px;
+  }
+}
+@media (min-width: $screen-md-min) {
+  .actions form {
+    margin-top: 0;
+  }
+}
+
+hr.inverted {
+  border-color: #333;
+}
+
+.top-spacing {
+  display: inline-block;
+}
+
+.a404.alert {
+  opacity: 0.9;
+}
+
+

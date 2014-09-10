@@ -9,7 +9,7 @@ github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github
 
 # Server Configuration
 
-hostname        = "vaprobash.dev"
+hostname        = "formulaapp.dev"
 
 # Set a local private network IP address.
 # See http://en.wikipedia.org/wiki/Private_network for explanation
@@ -20,16 +20,23 @@ hostname        = "vaprobash.dev"
 server_ip             = "192.168.22.10"
 server_memory         = "384" # MB
 server_swap           = "768" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
+
+# UTC        for Universal Coordinated Time
+# EST        for Eastern Standard Time
+# US/Central for American Central
+# US/Eastern for American Eastern
 server_timezone       = "Europe/Amsterdam"
+
 
 # Database Configuration
 mysql_root_password   = "root"   # We'll assume user "root"
 mysql_version         = "5.5"    # Options: 5.5 | 5.6
-mysql_enable_remote   = "false"  # remote access enabled when true
+mysql_enable_remote   = "true"  # remote access enabled when true
 pgsql_root_password   = "root"   # We'll assume user "root"
-redis_persistent      = "false"  # Options: false | true
+mongo_enable_remote   = "false"  # remote access enabled when true
 
 # Languages and Packages
+php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
 ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
 ruby_gems             = [        # List any Ruby Gems that you want to install
   #"jekyll",
@@ -42,10 +49,10 @@ hhvm                  = "false"
 
 # PHP Options
 composer_packages     = [        # List any global Composer packages that you want to install
-  #"phpunit/phpunit:~4.1.1",
-  #"codeception/codeception:~2.0.0",
-  #"phpspec/phpspec:~2.0.0@dev",
-  #"squizlabs/php_codesniffer:~1.5.3",
+  #"phpunit/phpunit:~4.2.2",
+  "codeception/codeception:*",
+  #"phpspec/phpspec:~2.0.1",
+  #"squizlabs/php_codesniffer:~1.5.4",
 ]
 
 # Default web server document root
@@ -59,7 +66,7 @@ symfony_root_folder   = "/vagrant/symfony" # Where to install Symfony.
 
 nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
 nodejs_packages       = [          # List any global NodeJS packages that you want to install
-  "grunt-cli",
+  #"grunt-cli",
   "gulp",
   "bower",
   #"yo",
@@ -69,6 +76,10 @@ Vagrant.configure("2") do |config|
 
   # Set server to Ubuntu 14.04
   config.vm.box = "ubuntu/trusty64"
+
+  config.vm.define "Vaprobash" do |vapro|
+  end
+
 
   # Create a hostname, don't forget to put it to the `hosts` file
   # This will point to the server's default virtual host
@@ -87,6 +98,8 @@ Vagrant.configure("2") do |config|
 
   # If using VirtualBox
   config.vm.provider :virtualbox do |vb|
+
+    vb.name = "Formulaapp"
 
     # Set server memory
     vb.customize ["modifyvm", :id, "--memory", server_memory]
@@ -124,15 +137,28 @@ Vagrant.configure("2") do |config|
     }
   end
 
+  # Adding vagrant-digitalocean provider - https://github.com/smdahlen/vagrant-digitalocean
+  # Needs to ensure that the vagrant plugin is installed
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+    provider.token = 'YOUR TOKEN'
+    provider.image = 'Ubuntu 14.04 x64'
+    provider.region = 'nyc2'
+    provider.size = '512mb'
+  end
+
   ####
   # Base Items
   ##########
 
   # Provision Base Packages
-  config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap]
+  config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # Provision PHP
-  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [server_timezone, hhvm]
+  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm]
 
   # Enable MSSQL for PHP
   # config.vm.provision "shell", path: "#{github_url}/scripts/mssql.sh"
@@ -175,10 +201,10 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/couchdb.sh"
 
   # Provision MongoDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mongodb.sh"
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mongodb.sh", args: mongo_enable_remote
 
   # Provision MariaDB
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mariadb.sh", args: [mysql_root_password, mysql_enable_remote]
+  config.vm.provision "shell", path: "#{github_url}/scripts/mariadb.sh", args: [mysql_root_password, mysql_enable_remote]
 
   ####
   # Search Servers
@@ -207,8 +233,11 @@ Vagrant.configure("2") do |config|
   # Install Memcached
   # config.vm.provision "shell", path: "#{github_url}/scripts/memcached.sh"
 
-  # Provision Redis
-  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh", args: redis_persistent
+  # Provision Redis (without journaling and persistence)
+  config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh"
+
+  # Provision Redis (with journaling and persistence)
+  # config.vm.provision "shell", path: "#{github_url}/scripts/redis.sh", args: "persistent"
   # NOTE: It is safe to run this to add persistence even if originally provisioned without persistence
 
 
@@ -224,6 +253,9 @@ Vagrant.configure("2") do |config|
 
   # Install Supervisord
   # config.vm.provision "shell", path: "#{github_url}/scripts/supervisord.sh"
+
+  # Install ØMQ
+  # config.vm.provision "shell", path: "#{github_url}/scripts/zeromq.sh"
 
   ####
   # Additional Languages
@@ -252,7 +284,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"
 
   # Install Mailcatcher
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mailcatcher.sh"
+  config.vm.provision "shell", path: "#{github_url}/scripts/mailcatcher.sh"
 
   # Install git-ftp
   # config.vm.provision "shell", path: "#{github_url}/scripts/git-ftp.sh", privileged: false

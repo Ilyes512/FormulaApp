@@ -43,8 +43,7 @@ class SessionController extends \BaseController {
         if ($validator->fails())
             return Redirect::route('login')
                 ->withInput()
-                ->withErrors($validator)
-                ->withMessageAlert('Oeps, there were some errors!');
+                ->withErrors($validator);
 
         // Try and login the user
         if (Auth::attempt($credentials, $remember))
@@ -54,7 +53,7 @@ class SessionController extends \BaseController {
         // Assume login failed
         return Redirect::route('login')
             ->withInput()
-            ->withMessageAlert('Invalid Username/Password combination!');
+            ->withFormError('Invalid Username/Password combination!');
     }
 
     /**
