@@ -8,8 +8,6 @@
             <h1>{{ $heading or 'All formulas' }}</h1>
         </div>
 
-        @include('partials.message')
-
         @if(isset($formulas) && ! $formulas->isEmpty())
             <div class="table-responsive">
                 <table class="table table-striped">

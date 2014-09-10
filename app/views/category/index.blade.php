@@ -7,8 +7,6 @@
             <h1>All categories</h1>
         </div>
 
-        @include('partials.message')
-
         @if (isset($categories) && ! $categories->isEmpty())
             <div class="table-responsive">
                 <table class="table table-striped">

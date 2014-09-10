@@ -7,8 +7,6 @@
             <h1>All Tags</h1>
         </div>
 
-        @include('partials.message')
-
         @if ( isset($tags) && ! $tags->isEmpty() )
             <div class="table-responsive">
                 <table class="table table-striped">
